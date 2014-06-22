@@ -11,7 +11,10 @@ if ( ! defined( 'WPSEO_VERSION' ) ) {
 }
 
 function home_url_extended($path=""){
-        return "http://".$_SERVER["HTTP_HOST"].$path;
+    if (strlen($path) > 0 && substr($path, 0,1) !="/"){
+        $path = "/".$path;
+    }
+        return "http://dal.".$_SERVER["HTTP_HOST"].$path;
 } 
 
 if ( ! class_exists( 'WPSEO_Sitemaps' ) ) {
@@ -243,7 +246,7 @@ if ( ! class_exists( 'WPSEO_Sitemaps' ) ) {
 			 *
 			 * @api bool $unsigned Enable cache or not, defaults to true
 			 */
-			$caching = apply_filters( 'wpseo_enable_xml_sitemap_transient_caching', true );
+			$caching = false;//apply_filters( 'wpseo_enable_xml_sitemap_transient_caching', true );
 
 			if ( $caching ) {
 				$this->sitemap = get_transient( 'wpseo_sitemap_cache_' . $type . '_' . $n );
