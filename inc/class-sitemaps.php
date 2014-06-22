@@ -14,7 +14,7 @@ function home_url_extended($path=""){
     if (strlen($path) > 0 && substr($path, 0,1) !="/"){
         $path = "/".$path;
     }
-        return "http://dal.".$_SERVER["HTTP_HOST"].$path;
+        return "http://".$_SERVER["HTTP_HOST"].$path;
 } 
 
 if ( ! class_exists( 'WPSEO_Sitemaps' ) ) {
