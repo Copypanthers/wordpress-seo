@@ -10,6 +10,10 @@ if ( ! defined( 'WPSEO_VERSION' ) ) {
 	exit();
 }
 
+function home_url_extended($path=""){
+        return "http://".$_SERVER["HTTP_HOST"].$path;
+} 
+
 if ( ! class_exists( 'WPSEO_Sitemaps' ) ) {
 	/**
 	 * Class WPSEO_Sitemaps
@@ -91,7 +95,7 @@ if ( ! class_exists( 'WPSEO_Sitemaps' ) ) {
 
 			$this->options     = WPSEO_Options::get_all();
 			$this->max_entries = $this->options['entries-per-page'];
-			$this->home_url    = home_url();
+			$this->home_url    = home_url_extended();
 			$this->charset     = get_bloginfo( 'charset' );
 
 		}
@@ -349,7 +353,7 @@ if ( ! class_exists( 'WPSEO_Sitemaps' ) ) {
 						}
 
 						$this->sitemap .= '<sitemap>' . "\n";
-						$this->sitemap .= '<loc>' . home_url( $base . $post_type . '-sitemap' . $count . '.xml' ) . '</loc>' . "\n";
+						$this->sitemap .= '<loc>' . home_url_extended( $base . $post_type . '-sitemap' . $count . '.xml' ) . '</loc>' . "\n";
 						$this->sitemap .= '<lastmod>' . htmlspecialchars( $date ) . '</lastmod>' . "\n";
 						$this->sitemap .= '</sitemap>' . "\n";
 					}
@@ -431,7 +435,7 @@ if ( ! class_exists( 'WPSEO_Sitemaps' ) ) {
 						}
 
 						$this->sitemap .= '<sitemap>' . "\n";
-						$this->sitemap .= '<loc>' . home_url( $base . $tax_name . '-sitemap' . $count . '.xml' ) . '</loc>' . "\n";
+						$this->sitemap .= '<loc>' . home_url_extended( $base . $tax_name . '-sitemap' . $count . '.xml' ) . '</loc>' . "\n";
 						$this->sitemap .= '<lastmod>' . htmlspecialchars( $date ) . '</lastmod>' . "\n";
 						$this->sitemap .= '</sitemap>' . "\n";
 					}
@@ -486,7 +490,7 @@ if ( ! class_exists( 'WPSEO_Sitemaps' ) ) {
 					}
 
 					$this->sitemap .= '<sitemap>' . "\n";
-					$this->sitemap .= '<loc>' . home_url( $base . 'author-sitemap' . $count . '.xml' ) . '</loc>' . "\n";
+					$this->sitemap .= '<loc>' . home_url_extended( $base . 'author-sitemap' . $count . '.xml' ) . '</loc>' . "\n";
 					$this->sitemap .= '<lastmod>' . htmlspecialchars( $date ) . '</lastmod>' . "\n";
 					$this->sitemap .= '</sitemap>' . "\n";
 				}
@@ -1166,7 +1170,7 @@ if ( ! class_exists( 'WPSEO_Sitemaps' ) ) {
 		 */
 		function hit_sitemap_index() {
 			$base = $GLOBALS['wp_rewrite']->using_index_permalinks() ? 'index.php/' : '';
-			$url  = home_url( $base . 'sitemap_index.xml' );
+			$url  = home_url_extended( $base . 'sitemap_index.xml' );
 			wp_remote_get( $url );
 		}
 
