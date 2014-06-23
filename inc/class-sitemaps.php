@@ -567,9 +567,9 @@ if ( ! class_exists( 'WPSEO_Sitemaps' ) ) {
 			$join_filter  = apply_filters( 'wpseo_typecount_join', $join_filter, $post_type );
 			$where_filter = '';
 			$where_filter = apply_filters( 'wpseo_typecount_where', $where_filter, $post_type );
-
+                        $where_filter = str_replace("'en'","'".ICL_LANGUAGE_CODE."'",$where_filter);
+                        
 			$query = $wpdb->prepare( "SELECT COUNT(ID) FROM $wpdb->posts {$join_filter} WHERE post_status IN ('publish','inherit') AND post_password = '' AND post_author != 0 AND post_date != '0000-00-00 00:00:00' AND post_type = %s " . $where_filter, $post_type );
-
 			$typecount = $wpdb->get_var( $query );
 
 			if ( $total > $typecount ) {
@@ -626,7 +626,7 @@ if ( ! class_exists( 'WPSEO_Sitemaps' ) ) {
 
 			// Make sure you're wpdb->preparing everything you throw into this!!
 			$join_filter  = apply_filters( 'wpseo_posts_join', false, $post_type );
-			$where_filter = apply_filters( 'wpseo_posts_where', false, $post_type );
+			//$where_filter = apply_filters( 'wpseo_posts_where', false, $post_type );
 
 			$status = ( $post_type == 'attachment' ) ? 'inherit' : 'publish';
 
